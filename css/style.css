@@ -80,12 +80,14 @@ header {
   border: none;
 
   /* Moved background colors to secondary classes*/
-/*background-color: hsl(360, 91%, 36%);*/
+  /*background-color: hsl(360, 91%, 36%);*/
   border-radius: 25px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 6px 0px rgba(0, 0, 0, 0.2) 0px 1px 1px
     0px;
   color: hsl(0, 0%, 100%);
-  display: inline-block;
+  /* Moving to secondary background color class to individually 
+  allow control of button visibility */
+  /*display: inline-block;*/
   font-size: 22px;
   line-height: 22px;
   margin: 16px 16px 16px 20px;
@@ -97,12 +99,12 @@ header {
 .btn_BackgroundRed
 {
   background-color: hsl(360, 91%, 36%);
+  display: inline-block;
 }
 
 .btn_BackgroundGreen
 {
   background-color: rgb(0, 153, 20);
-  display: none;
 }
 
 button[disabled] {

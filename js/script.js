@@ -1,17 +1,22 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
-var retryBtn = document.querySelector("#rerun");
+var retryBtn = document.getElementById("rerun");
+retryBtn.style.display = 'none';
+//first time through writePassword function
+var first = 1;
 var pwdLength = 0;
 var pwdTypeArr = [];
 var minWidth = 8;
 var maxWidth = 128;
+//what is allowed
 var arrCharTypes = ["lowercase", "uppercase", "numeric", "specials"];
 
 // Write password to the #password input
 function writePassword() 
 {
   // make sure retry button is display:none
-  toggleRetryBtn ();
+  !first ? toggleRetryBtn () : first=0
+
   pwdLength = 0;
   pwdTypeArr = [];
 
@@ -19,7 +24,7 @@ function writePassword()
   pwdTypeArr = pw_charTypes();
 
   var passwordText = document.querySelector("#password");
-  //broke this out into separate function so I could reuse it as part of a retry button
+  //broke derivePwd out into separate function so I could reuse it as part of a retry button
   password.value = (derivePwd (pwdLength, pwdTypeArr));
   toggleRetryBtn ();
 }
@@ -121,7 +126,6 @@ function pw_charTypes ()
 
   if (!valid) 
   {
-    alert ("  Sorry the following values are not valid: "+ wrongTypes.join(" "));
     //Re-initialize pw_charTypes arrays/strings
     wrongTypes = [];
     responseArr = [];
@@ -160,12 +164,13 @@ function specialChar()
 
 function toggleRetryBtn ()
 {
-  if (retryBtn.style.display === "none") 
+  if (retryBtn.style.display === 'none') 
   {
-    retryBtn.style.display = "block";
+    retryBtn.style.display = 'inline-block';
   } 
   else 
   {
-    retryBtn.style.display = "none";
+    retryBtn.style.display = 'none';
   }
+  alert ("'" +retryBtn.style.display + "'");
 }
