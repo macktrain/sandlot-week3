@@ -1,6 +1,6 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
-var retryBtn = document.getElementById("rerun");
+var retryBtn = document.querySelector("#rerun");
 retryBtn.style.display = 'none';
 //first time through writePassword function
 var first = 1;
@@ -17,38 +17,42 @@ function writePassword()
   // make sure retry button is display:none
   !first ? toggleRetryBtn () : first=0
 
+
+
   pwdLength = 0;
-  pwdTypeArr = [];
+  pwdTypeArr = "";
 
   pwdLength = promptLen();
   pwdTypeArr = pw_charTypes();
 
   var passwordText = document.querySelector("#password");
   //broke derivePwd out into separate function so I could reuse it as part of a retry button
-  password.value = (derivePwd (pwdLength, pwdTypeArr));
+  password.value = (derivePwd ());
   toggleRetryBtn ();
 }
 
-function derivePwd (pwdLength, pwdTypeArr)
+function derivePwd ()
 {
   //counters to track which type of character was used
   var nums = 0;
   var lower = 0;
   var upper = 0;
   var specs = 0;
+  var lowerCase = "";
   
   var password = "";
 
   for (var i=0; i< pwdLength; i++)
   {
-    switch (pwdTypeArr[(Math.floor(Math.random()*(pwdTypeArr.length-1)))])
+    switch (pwdTypeArr[(Math.floor(Math.random()*(pwdTypeArr.length)))])
     {
       case "uppercase":
           password += randomLetter();
           nums++;
         break;
       case "lowercase":
-          password += randomLetter();
+          lowerCase = randomLetter();
+          password += lowerCase.toLowerCase();
           lower++;
         break;
       case "numeric":
@@ -127,8 +131,8 @@ function pw_charTypes ()
   if (!valid) 
   {
     //Re-initialize pw_charTypes arrays/strings
-    wrongTypes = [];
-    responseArr = [];
+    wrongTypes = "";
+    responseArr = "";
     charType = "";
     //user must re-enter their options.
     pw_charTypes();
@@ -172,5 +176,36 @@ function toggleRetryBtn ()
   {
     retryBtn.style.display = 'none';
   }
-  alert ("'" +retryBtn.style.display + "'");
+
+  retryBtn.display
+}
+
+//a-z are js keycodes 65-90.  By taking a random number 
+//between 0 and 25 then adding 65 to it, I will get a 
+//keycode of 65-90 then in the calling function convert 
+//the keycode to a randomly generated letter.  Uppercase
+//letters will take the same flow however they will be made
+//uppercase.
+function randomNumber()
+{
+  //Note the '+48' takes us to the 1st keycode with a number
+  //Note the '*10' keeps us focused on key codes 0-10
+  return(String.fromCharCode(Math.floor(Math.random()*10)+48));
+}
+
+//Gives a random letter ... upper and lower determined later
+function randomLetter()
+{
+  //Note the '+65' takes us to the 1st keycode with a letter
+  //Note the '*26' keeps us focused on key codes a-z
+  return(String.fromCharCode(Math.floor(Math.random()*26)+65));
+}
+
+//Special Characters are not listed in numerical order within the list of 
+//keycodes, so we cannot use the same approach.  We must create an array of
+//the allowed special characters.
+function specialChar()
+{
+  const validSpecialChars = ["!","\"", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "\\", "]", "^", "_", "`", "{", "|", "}", "~", "]"];
+  return(validSpecialChars[(Math.floor(Math.random()*validSpecialChars.length))]);
 }
